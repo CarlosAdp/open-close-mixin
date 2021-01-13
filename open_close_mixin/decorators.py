@@ -10,7 +10,7 @@ def check_status(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(instance: Any, *args, **kwargs) -> Any:
         try:
-            when = method._when
+            when = getattr(method, '_when', OPEN)
             is_open = getattr(instance, '_open', False)
 
             assert(
@@ -22,16 +22,15 @@ def check_status(method: Callable) -> Callable:
         except AssertionError:
             exception = getattr(instance, f'not_{when.lower()}_exception')
             exception.args = (
-                exception.args[0].format(
-                    method_name=method.__qualname__
-                ),
+                exception.args[0].format(method_name=method.__qualname__),
             ) + exception.args[1:]
             raise exception from None
     return wrapper
 
 
 def set_required_status(status: str) -> Callable[[Callable], Callable]:
-    '''Mark the required status for a method to be able to run.
+    '''Set the required status an instance must have in order for a method to
+    be able to run.
 
     :param status: one of the following strings: `open`, `closed` or `always`
     :type status: str

@@ -15,8 +15,8 @@ url = 'https://github.com/CarlosAdp/open-close-mixin'
 download_url = url + f'/archive/v{version}.tar.gz'
 
 classifiers = [
-    'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
     'Operating System :: OS Independent',
     'Topic :: Utilities',
     'License :: OSI Approved :: MIT License',
