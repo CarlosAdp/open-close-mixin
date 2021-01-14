@@ -66,12 +66,8 @@ class OpenCloseMixin(ABC):
     def __init__(self: 'OpenCloseMixin') -> None:
         return
 
-    # @check_status
-    # @only_while_closed
     def open(self: 'OpenCloseMixin') -> None:
         self._open = True
 
-    # @check_status
-    # @only_while_open
     def close(self: 'OpenCloseMixin') -> None:
         self._open = False
