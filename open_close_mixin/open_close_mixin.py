@@ -13,6 +13,8 @@ class OpenCloseMixin(ABC):
 
     A boolean variable called `_open` will be set to all the instances of this
     class, in order to control whether the instance is open or not.
+    It's advised not to used the `_open` variable, but the method `is_open`
+    instead.
 
     Some methods may have a string variable called `_when`, assigned to one of
     the strings `open`, `closed` or `always`. When present, indicates when a
@@ -55,6 +57,7 @@ class OpenCloseMixin(ABC):
         cls: Type['OpenCloseMixin'], **kwargs
     ) -> Type['OpenCloseMixin']:
         setattr(cls, '__init__', always(getattr(cls, '__init__')))
+        setattr(cls, 'is_open', always(getattr(cls, 'is_open')))
         setattr(cls, 'open', only_while_closed(getattr(cls, 'open')))
         setattr(cls, 'close', only_while_open(getattr(cls, 'close')))
         for attr_name in cls.__dict__:
@@ -71,3 +74,14 @@ class OpenCloseMixin(ABC):
 
     def close(self: 'OpenCloseMixin') -> None:
         self._open = False
+
+    def is_open(self: 'OpenCloseMixin') -> bool:
+        '''Indicate if object is open.
+
+        May be overriden in cases in which the open status depends on external
+        objects.
+
+        :return: Whether the instance is open or not
+        :rtype: bool
+        '''
+        return getattr(self, '_open', False)

@@ -7,16 +7,17 @@ from .constants import ALWAYS, CLOSED, OPEN
 
 
 def check_status(method: Callable) -> Callable:
+    print(method.__name__)
+
     @wraps(method)
     def wrapper(instance: Any, *args, **kwargs) -> Any:
         try:
             when = getattr(method, '_when', OPEN)
-            is_open = getattr(instance, '_open', False)
 
             assert(
                 when == ALWAYS
-                or (when == OPEN and is_open)
-                or (when == CLOSED and not is_open)
+                or (when == OPEN and instance.is_open())
+                or (when == CLOSED and not instance.is_open())
             )
             return method(instance, *args, **kwargs)
         except AssertionError:
