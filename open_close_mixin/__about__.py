@@ -1,5 +1,5 @@
 name = 'open-close-mixin'
-version = '1.1.1'
+version = '1.1.2'
 
 author = 'Carlos Alberto Duarte Pinto'
 author_email = 'carlos.adpinto@gmail.com'

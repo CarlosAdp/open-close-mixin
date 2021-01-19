@@ -7,8 +7,6 @@ from .constants import ALWAYS, CLOSED, OPEN
 
 
 def check_status(method: Callable) -> Callable:
-    print(method.__name__)
-
     @wraps(method)
     def wrapper(instance: Any, *args, **kwargs) -> Any:
         try:
