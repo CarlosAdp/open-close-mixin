@@ -27,7 +27,7 @@ def check_status(method: Callable) -> Callable:
     return wrapper
 
 
-def set_required_status(status: str) -> Callable[[Callable], Callable]:
+def set_required_status(status: str) -> Callable:
     '''Set the required status an instance must have in order for a method to
     be able to run.
 
